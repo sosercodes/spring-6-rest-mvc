@@ -72,7 +72,7 @@ public class BeerServiceImpl implements BeerService {
     public Beer saveNewBeer(Beer beer) {
         Beer savedBeer = Beer.builder()
                 .id(UUID.randomUUID())
-                .version(beer.getVersion())
+                .version(1)
                 .beerName(beer.getBeerName())
                 .beerStyle(beer.getBeerStyle())
                 .upc(beer.getUpc())

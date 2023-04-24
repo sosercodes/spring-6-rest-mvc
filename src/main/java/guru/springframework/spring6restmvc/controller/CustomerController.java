@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 @Slf4j
@@ -19,6 +22,15 @@ import java.util.UUID;
 public class CustomerController {
 
     private final CustomerService customerService;
+
+    @PutMapping("/{customerId}")
+    public ResponseEntity updateCustomer(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
+        Customer savedCustomer = customerService.updateCustomer(customerId, customer);
+        return ResponseEntity.noContent()
+                .eTag("v" + savedCustomer.getVersion())
+                .lastModified(savedCustomer.getUpdateDate().atZone(ZoneId.systemDefault()))
+                .build();
+    }
 
     @PostMapping
     public ResponseEntity handlePost(@RequestBody Customer customer) {

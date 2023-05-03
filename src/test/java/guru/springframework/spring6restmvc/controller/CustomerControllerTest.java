@@ -6,6 +6,8 @@ import guru.springframework.spring6restmvc.services.CustomerService;
 import guru.springframework.spring6restmvc.services.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWithIgnoringCase;
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +45,19 @@ class CustomerControllerTest {
         customerServiceImpl = new CustomerServiceImpl();
     }
 
+    @Captor
+    ArgumentCaptor<UUID> captor;
+
+    @Test
+    void deleteCustomer() throws Exception {
+        Customer customer = customerServiceImpl.listCustomers().get(0);
+        mockMvc.perform(delete("/api/v1/customers/" + customer.getId())
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        verify(customerService).deleteCustomerById(captor.capture());
+        assertThat(customer.getId()).isEqualTo(captor.getValue());
+    }
     @Test
     void updateCustomer() throws Exception {
         Customer customer = customerServiceImpl.listCustomers().get(0);
@@ -52,7 +68,8 @@ class CustomerControllerTest {
                         .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isNoContent())
                 .andExpect(header().exists("eTag"));
-        // verify(customerService.updateCustomer(any(UUID.class), any(Customer.class)));
+        verify(customerService).updateCustomer(captor.capture(), any(Customer.class));
+        assertThat(customer.getId()).isEqualTo(captor.getValue());
     }
 
     @Test

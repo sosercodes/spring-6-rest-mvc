@@ -57,7 +57,7 @@ class CustomerControllerTest {
         Customer customer = customerServiceImpl.listCustomers().get(0);
         Map<String, Object> body = new HashMap<>();
         body.put("name", "Customer in Test");
-        mockMvc.perform(patch(CustomerController.CUSTOMER_PATH + "/" + customer.getId())
+        mockMvc.perform(patch(CustomerController.CUSTOMER_PATH_ID, customer.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body)))
@@ -70,7 +70,7 @@ class CustomerControllerTest {
     @Test
     void deleteCustomer() throws Exception {
         Customer customer = customerServiceImpl.listCustomers().get(0);
-        mockMvc.perform(delete(CustomerController.CUSTOMER_PATH + "/" + customer.getId())
+        mockMvc.perform(delete(CustomerController.CUSTOMER_PATH_ID, customer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
@@ -81,7 +81,7 @@ class CustomerControllerTest {
     void updateCustomer() throws Exception {
         Customer customer = customerServiceImpl.listCustomers().get(0);
         given(customerService.updateCustomer(any(UUID.class), any(Customer.class))).willReturn(customer);
-        mockMvc.perform(put(CustomerController.CUSTOMER_PATH + "/" + customer.getId(), customer)
+        mockMvc.perform(put(CustomerController.CUSTOMER_PATH_ID, customer.getId(), customer)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer)))

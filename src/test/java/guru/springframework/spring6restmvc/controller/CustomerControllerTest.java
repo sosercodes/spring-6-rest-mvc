@@ -14,12 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWithIgnoringCase;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -46,7 +47,25 @@ class CustomerControllerTest {
     }
 
     @Captor
-    ArgumentCaptor<UUID> captor;
+    ArgumentCaptor<UUID> uuidArgumentCaptor;
+
+    @Captor
+    ArgumentCaptor<Customer> customerArgumentCaptor;
+
+    @Test
+    void patchCutomer() throws Exception {
+        Customer customer = customerServiceImpl.listCustomers().get(0);
+        Map<String, Object> body = new HashMap<>();
+        body.put("name", "Customer in Test");
+        mockMvc.perform(patch("/api/v1/customers/" + customer.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(body)))
+                .andExpect(status().isNoContent());
+        verify(customerService).patchCustomer(uuidArgumentCaptor.capture(), customerArgumentCaptor.capture());
+        assertThat(customer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
+        assertThat(body.get("name")).isEqualTo(customerArgumentCaptor.getValue().getName());
+    }
 
     @Test
     void deleteCustomer() throws Exception {
@@ -55,8 +74,8 @@ class CustomerControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
-        verify(customerService).deleteCustomerById(captor.capture());
-        assertThat(customer.getId()).isEqualTo(captor.getValue());
+        verify(customerService).deleteCustomerById(uuidArgumentCaptor.capture());
+        assertThat(customer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
     }
     @Test
     void updateCustomer() throws Exception {
@@ -68,8 +87,8 @@ class CustomerControllerTest {
                         .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isNoContent())
                 .andExpect(header().exists("eTag"));
-        verify(customerService).updateCustomer(captor.capture(), any(Customer.class));
-        assertThat(customer.getId()).isEqualTo(captor.getValue());
+        verify(customerService).updateCustomer(uuidArgumentCaptor.capture(), any(Customer.class));
+        assertThat(customer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
     }
 
     @Test

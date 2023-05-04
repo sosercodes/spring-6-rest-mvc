@@ -53,11 +53,11 @@ class CustomerControllerTest {
     ArgumentCaptor<Customer> customerArgumentCaptor;
 
     @Test
-    void patchCutomer() throws Exception {
+    void patchCustomer() throws Exception {
         Customer customer = customerServiceImpl.listCustomers().get(0);
         Map<String, Object> body = new HashMap<>();
         body.put("name", "Customer in Test");
-        mockMvc.perform(patch("/api/v1/customers/" + customer.getId())
+        mockMvc.perform(patch(CustomerController.CUSTOMER_PATH + "/" + customer.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(body)))
@@ -70,7 +70,7 @@ class CustomerControllerTest {
     @Test
     void deleteCustomer() throws Exception {
         Customer customer = customerServiceImpl.listCustomers().get(0);
-        mockMvc.perform(delete("/api/v1/customers/" + customer.getId())
+        mockMvc.perform(delete(CustomerController.CUSTOMER_PATH + "/" + customer.getId())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
@@ -81,7 +81,7 @@ class CustomerControllerTest {
     void updateCustomer() throws Exception {
         Customer customer = customerServiceImpl.listCustomers().get(0);
         given(customerService.updateCustomer(any(UUID.class), any(Customer.class))).willReturn(customer);
-        mockMvc.perform(put("/api/v1/customers/" + customer.getId(), customer)
+        mockMvc.perform(put(CustomerController.CUSTOMER_PATH + "/" + customer.getId(), customer)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer)))
@@ -97,19 +97,19 @@ class CustomerControllerTest {
         customer.setId(null);
         customer.setName("Customer Create");
         given(customerService.saveNewCustomer(any(Customer.class))).willReturn(customerServiceImpl.listCustomers().get(1));
-        mockMvc.perform(post("/api/v1/customers")
+        mockMvc.perform(post(CustomerController.CUSTOMER_PATH)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
-                .andExpect(header().string("Location", startsWithIgnoringCase("/api/v1/customers")));
+                .andExpect(header().string("Location", startsWithIgnoringCase(CustomerController.CUSTOMER_PATH)));
     }
 
     @Test
     void listCustomers() throws Exception {
         given(customerService.listCustomers()).willReturn(customerServiceImpl.listCustomers());
-        mockMvc.perform(get("/api/v1/customers")
+        mockMvc.perform(get(CustomerController.CUSTOMER_PATH)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -122,7 +122,7 @@ class CustomerControllerTest {
 
         given(customerService.getCustomerById(customer.getId())).willReturn(customer);
 
-        mockMvc.perform(get("/api/v1/customers/" + customer.getId())
+        mockMvc.perform(get(CustomerController.CUSTOMER_PATH + "/" + customer.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

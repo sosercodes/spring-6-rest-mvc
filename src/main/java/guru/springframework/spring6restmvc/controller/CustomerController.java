@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class CustomerController {
 
     @PutMapping(CUSTOMER_PATH_ID)
     public ResponseEntity updateCustomer(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDTO customer) {
-        CustomerDTO savedCustomer = customerService.updateCustomer(customerId, customer);
+        CustomerDTO savedCustomer = customerService.updateCustomer(customerId, customer).orElseThrow(NotFoundException::new);
         return ResponseEntity.noContent()
                 .eTag("v" + savedCustomer.getVersion())
                 .lastModified(savedCustomer.getUpdateDate().atZone(ZoneId.systemDefault()))

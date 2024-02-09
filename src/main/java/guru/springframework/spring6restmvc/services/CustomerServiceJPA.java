@@ -1,6 +1,5 @@
 package guru.springframework.spring6restmvc.services;
 
-import guru.springframework.spring6restmvc.controller.NotFoundException;
 import guru.springframework.spring6restmvc.entities.Customer;
 import guru.springframework.spring6restmvc.mappers.CustomerMapper;
 import guru.springframework.spring6restmvc.model.CustomerDTO;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,14 +38,14 @@ public class CustomerServiceJPA implements CustomerService {
     }
 
     @Override
-    public CustomerDTO updateCustomer(UUID customerId, CustomerDTO customer) {
+    public Optional<CustomerDTO> updateCustomer(UUID customerId, CustomerDTO customer) {
         AtomicReference<CustomerDTO> atomicReference= new AtomicReference<CustomerDTO>();
         customerRepository.findById(customerId).ifPresent(c -> {
             c.setName(customer.getName());
             Customer savedCustomer = customerRepository.save(c);
             atomicReference.set(customerMapper.customerToCustomerDto(savedCustomer));
         });
-        return atomicReference.get();
+        return Optional.ofNullable(atomicReference.get());
     }
 
     @Override

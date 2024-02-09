@@ -28,24 +28,10 @@ class CustomerControllerIT {
     @Autowired
     CustomerMapper customerMapper;
 
-    /*
-
-    @Transactional
-    @Rollback
     @Test
-    void testUpdateBeer() {
-        Beer beer = beerRepository.findAll().get(0);
-        BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
-        beerDTO.setBeerName("New Beername");
-        beerDTO.setId(null);
-        beerDTO.setVersion(0);
-
-        ResponseEntity responseEntity = beerController.updateBeer(beer.getId(), beerDTO);
-
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-        assertThat(beerRepository.findById(beer.getId()).get().getBeerName()).isEqualTo(beerDTO.getBeerName());
+    void testUpdateCustomerNotFound() {
+        assertThrows(NotFoundException.class, () -> customerController.updateCustomer(UUID.randomUUID(), CustomerDTO.builder().build()));
     }
-     */
 
     @Transactional
     @Rollback

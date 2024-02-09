@@ -1,6 +1,5 @@
 package guru.springframework.spring6restmvc.services;
 
-import guru.springframework.spring6restmvc.entities.Beer;
 import guru.springframework.spring6restmvc.mappers.BeerMapper;
 import guru.springframework.spring6restmvc.model.BeerDTO;
 import guru.springframework.spring6restmvc.repositories.BeerRepository;
@@ -54,8 +53,12 @@ public class BeerServiceJPA implements BeerService {
     }
 
     @Override
-    public void deleteBeerById(UUID beerId) {
-        beerRepository.deleteById(beerId);
+    public Boolean deleteBeerById(UUID beerId) {
+        if (beerRepository.existsById(beerId)) {
+            beerRepository.deleteById(beerId);
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package guru.springframework.spring6restmvc.controller;
 
+import guru.springframework.spring6restmvc.mappers.CustomerMapper;
 import guru.springframework.spring6restmvc.model.CustomerDTO;
 import guru.springframework.spring6restmvc.repositories.CustomerRepository;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,43 @@ class CustomerControllerIT {
     CustomerController customerController;
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    CustomerMapper customerMapper;
+
+    /*
+
+    @Transactional
+    @Rollback
+    @Test
+    void testUpdateBeer() {
+        Beer beer = beerRepository.findAll().get(0);
+        BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
+        beerDTO.setBeerName("New Beername");
+        beerDTO.setId(null);
+        beerDTO.setVersion(0);
+
+        ResponseEntity responseEntity = beerController.updateBeer(beer.getId(), beerDTO);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(beerRepository.findById(beer.getId()).get().getBeerName()).isEqualTo(beerDTO.getBeerName());
+    }
+     */
+
+    @Transactional
+    @Rollback
+    @Test
+    void testUpdateCustomer() {
+        var customer = customerRepository.findAll().get(0);
+        var customerDto = customerMapper.customerToCustomerDto(customer);
+        customerDto.setName("New Customer");
+        customer.setVersion(0);
+
+        ResponseEntity responseEntity = customerController.updateCustomer(customer.getId(), customerDto);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(customerRepository.findById(customer.getId()).get().getName()).isEqualTo(customerDto.getName());
+    }
 
     @Transactional
     @Rollback

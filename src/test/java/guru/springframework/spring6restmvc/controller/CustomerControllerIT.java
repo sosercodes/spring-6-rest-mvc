@@ -29,6 +29,11 @@ class CustomerControllerIT {
     @Autowired
     CustomerMapper customerMapper;
 
+    @Test
+    void testDeleteCustomerByIdNotFound() {
+        assertThrows(NotFoundException.class, () -> customerController.deleteCustomer(UUID.randomUUID()));
+    }
+
     @Transactional
     @Rollback
     @Test

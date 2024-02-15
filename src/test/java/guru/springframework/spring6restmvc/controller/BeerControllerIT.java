@@ -13,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +28,30 @@ class BeerControllerIT {
 
     @Autowired
     BeerMapper beerMapper;
+
+    @Transactional
+    @Rollback
+    @Test
+    void testPatchBeerById() {
+        Beer beer = beerRepository.findAll().get(0);
+        BeerDTO beerDTO = beerMapper.beerToBeerDto(beer);
+        beerDTO.setBeerName("New Beer");
+        beerDTO.setBeerStyle(null);
+        beerDTO.setPrice(null);
+        beerDTO.setUpc(null);
+        beerDTO.setQuantityOnHand(null);
+
+        ResponseEntity responseEntity = beerController.patchBeer(beer.getId(), beerDTO);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        var patchedBeer = beerRepository.findById(beer.getId());
+        assertThat(patchedBeer).isNotEmpty();
+        assertThat(patchedBeer.get().getBeerName()).isEqualTo(beerDTO.getBeerName());
+        assertThat(patchedBeer.get().getBeerStyle()).isEqualTo(beer.getBeerStyle());
+        assertThat(patchedBeer.get().getPrice()).isEqualTo(beer.getPrice());
+        assertThat(patchedBeer.get().getUpc()).isEqualTo(beer.getUpc());
+        assertThat(patchedBeer.get().getQuantityOnHand()).isEqualTo(beer.getQuantityOnHand());
+    }
 
     @Test
     void testDeleteBeerByIdNotFound() {

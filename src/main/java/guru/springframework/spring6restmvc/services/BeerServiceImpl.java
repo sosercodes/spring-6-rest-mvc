@@ -108,22 +108,25 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public void patchBeerById(UUID beerId, BeerDTO beer) {
-        BeerDTO existing = beerMap.get(beerId);
-        if (StringUtils.hasText(beer.getBeerName())){
-            existing.setBeerName(beer.getBeerName());
+    public Optional<BeerDTO> patchBeerById(UUID beerId, BeerDTO beer) {
+        var existing = beerMap.get(beerId);
+        if (existing != null) {
+            if (StringUtils.hasText(beer.getBeerName())){
+                existing.setBeerName(beer.getBeerName());
+            }
+            if (beer.getBeerStyle() != null) {
+                existing.setBeerStyle(beer.getBeerStyle());
+            }
+            if (beer.getPrice() != null) {
+                existing.setPrice(beer.getPrice());
+            }
+            if (beer.getQuantityOnHand() != null){
+                existing.setQuantityOnHand(beer.getQuantityOnHand());
+            }
+            if (StringUtils.hasText(beer.getUpc())) {
+                existing.setUpc(beer.getUpc());
+            }
         }
-        if (beer.getBeerStyle() != null) {
-            existing.setBeerStyle(beer.getBeerStyle());
-        }
-        if (beer.getPrice() != null) {
-            existing.setPrice(beer.getPrice());
-        }
-        if (beer.getQuantityOnHand() != null){
-            existing.setQuantityOnHand(beer.getQuantityOnHand());
-        }
-        if (StringUtils.hasText(beer.getUpc())) {
-            existing.setUpc(beer.getUpc());
-        }
+        return Optional.ofNullable(existing);
     }
 }

@@ -1,6 +1,5 @@
 package guru.springframework.spring6restmvc.services;
 
-import guru.springframework.spring6restmvc.entities.Beer;
 import guru.springframework.spring6restmvc.mappers.BeerMapper;
 import guru.springframework.spring6restmvc.model.BeerDTO;
 import guru.springframework.spring6restmvc.repositories.BeerRepository;
@@ -64,8 +63,9 @@ public class BeerServiceJPA implements BeerService {
     }
 
     @Override
-    public void patchBeerById(UUID beerId, BeerDTO beer) {
-        var beerFound = beerRepository.findById(beer.getId());
+    public Optional<BeerDTO> patchBeerById(UUID beerId, BeerDTO beer) {
+        var beerFound = beerRepository.findById(beerId);
+        AtomicReference<BeerDTO> patchedBeer = new AtomicReference<>();
         beerFound.ifPresent(b -> {
             if (StringUtils.hasText(beer.getBeerName())){
                 b.setBeerName(beer.getBeerName());
@@ -83,6 +83,8 @@ public class BeerServiceJPA implements BeerService {
                 b.setUpc(beer.getUpc());
             }
             beerRepository.save(b);
+            patchedBeer.set(beerMapper.beerToBeerDto(b));
         });
+        return Optional.ofNullable(patchedBeer.get());
     }
 }

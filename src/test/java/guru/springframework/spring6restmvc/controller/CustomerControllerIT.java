@@ -29,6 +29,20 @@ class CustomerControllerIT {
     @Autowired
     CustomerMapper customerMapper;
 
+    @Transactional
+    @Rollback
+    @Test
+    void testPatchCustomerById() {
+        var customer = customerRepository.findAll().get(0);
+        var customerDto = customerMapper.customerToCustomerDto(customer);
+        customerDto.setName("New Customer");
+
+        ResponseEntity responseEntity = customerController.patchCustomer(customer.getId(), customerDto);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+        assertThat(customerRepository.findById(customer.getId()).get().getName()).isEqualTo(customerDto.getName());
+    }
+
     @Test
     void testDeleteCustomerByIdNotFound() {
         assertThrows(NotFoundException.class, () -> customerController.deleteCustomer(UUID.randomUUID()));
@@ -37,7 +51,7 @@ class CustomerControllerIT {
     @Transactional
     @Rollback
     @Test
-    void testDeleteBeerById() {
+    void testCustomerById() {
         Customer customer = customerRepository.findAll().get(0);
         ResponseEntity responseEntity = customerController.deleteCustomer(customer.getId());
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);

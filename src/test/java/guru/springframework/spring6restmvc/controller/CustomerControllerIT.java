@@ -29,6 +29,11 @@ class CustomerControllerIT {
     @Autowired
     CustomerMapper customerMapper;
 
+    @Test
+    void testPatchCustomerByIdNotFound() {
+        assertThrows(NotFoundException.class, () -> customerController.patchCustomer(UUID.randomUUID(), CustomerDTO.builder().build()));
+    }
+
     @Transactional
     @Rollback
     @Test

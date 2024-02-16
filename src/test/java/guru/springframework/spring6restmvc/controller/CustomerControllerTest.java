@@ -57,8 +57,11 @@ class CustomerControllerTest {
     @Test
     void patchCustomer() throws Exception {
         CustomerDTO customer = customerServiceImpl.listCustomers().get(0);
-        Map<String, Object> body = new HashMap<>();
+        Map<String, String> body = new HashMap<>();
         body.put("name", "Customer in Test");
+        customer.setName(body.get("name"));
+        when(customerService.patchCustomer(any(), any())).thenReturn(Optional.of(customer));
+
         mockMvc.perform(patch(CustomerController.CUSTOMER_PATH_ID, customer.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)

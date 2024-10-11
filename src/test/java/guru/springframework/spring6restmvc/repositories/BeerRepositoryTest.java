@@ -5,13 +5,27 @@ import guru.springframework.spring6restmvc.model.BeerStyle;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestPropertySource;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.utility.TestcontainersConfiguration;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@Import(TestcontainersConfiguration.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(
+        properties = {
+                "spring.datasource.url = jdbc:tc:mysql:8.0://hostname/test-database",
+                "spring.datasource.driver-class-name = org.testcontainers.jdbc.ContainerDatabaseDriver"
+        }
+)
 @DataJpaTest
 class BeerRepositoryTest {
 

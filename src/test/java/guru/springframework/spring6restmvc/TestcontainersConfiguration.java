@@ -1,5 +1,9 @@
 package guru.springframework.spring6restmvc;
 
+import guru.springframework.spring6restmvc.services.BeerCsvService;
+import guru.springframework.spring6restmvc.services.BeerCsvServiceImpl;
+import guru.springframework.spring6restmvc.services.BeerService;
+import guru.springframework.spring6restmvc.services.BeerServiceImpl;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;

@@ -15,7 +15,7 @@ import org.testcontainers.utility.TestcontainersConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Import(TestcontainersConfiguration.class)
+@Import({TestcontainersConfiguration.class, BeerCsvServiceImpl.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(
         properties = {
@@ -31,12 +31,13 @@ class BootstrapDataTest {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
     BeerCsvService beerCsvService;
+
     BootstrapData bootstrapData;
 
     @BeforeEach
     void setUp() throws Exception {
-        beerCsvService = new BeerCsvServiceImpl();
         bootstrapData = new BootstrapData(beerRepository, customerRepository, beerCsvService);
         bootstrapData.run();
     }

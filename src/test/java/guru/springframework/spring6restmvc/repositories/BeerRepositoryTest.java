@@ -1,7 +1,9 @@
 package guru.springframework.spring6restmvc.repositories;
 
+import guru.springframework.spring6restmvc.bootstrap.BootstrapData;
 import guru.springframework.spring6restmvc.entities.Beer;
 import guru.springframework.spring6restmvc.model.BeerStyle;
+import guru.springframework.spring6restmvc.services.BeerCsvServiceImpl;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,12 @@ import org.testcontainers.utility.TestcontainersConfiguration;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Import(TestcontainersConfiguration.class)
+@Import({TestcontainersConfiguration.class, BootstrapData.class, BeerCsvServiceImpl.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(
         properties = {
@@ -31,6 +34,14 @@ class BeerRepositoryTest {
 
     @Autowired
     BeerRepository beerRepository;
+
+    @Test
+    void testGetBeerListByName() {
+        List<Beer> list = beerRepository.findAllByBeerNameIsLikeIgnoreCase("%IPA%");
+        assertThat(list).isNotEmpty();
+        assertThat(list).hasSize(336);
+    }
+
 
     @Test
     void testSaveBeerNameTooLong() {

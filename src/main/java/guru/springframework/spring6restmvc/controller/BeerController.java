@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class BeerController {
     private final BeerService beerService;
 
     @PatchMapping(BEER_PATH_ID)
-    public ResponseEntity patchBeer(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beer){
+    public ResponseEntity<?> patchBeer(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beer){
         if (beerService.patchBeerById(beerId, beer).isEmpty()) {
             throw new NotFoundException();
         }
@@ -33,7 +34,7 @@ public class BeerController {
     }
 
     @DeleteMapping(BEER_PATH_ID)
-    public ResponseEntity deleteBeer(@PathVariable("beerId") UUID beerId) {
+    public ResponseEntity<?> deleteBeer(@PathVariable("beerId") UUID beerId) {
         if (!beerService.deleteBeerById(beerId)) {
             throw new NotFoundException();
         }
@@ -41,21 +42,19 @@ public class BeerController {
     }
 
     @PutMapping(BEER_PATH_ID)
-    public ResponseEntity updateBeer(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDTO beer) {
+    public ResponseEntity<?> updateBeer(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDTO beer) {
         beerService.updateBeerById(beerId, beer).orElseThrow(NotFoundException::new);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping(BEER_PATH)
-    public ResponseEntity handlePost(@Validated @RequestBody BeerDTO beer){
-        BeerDTO savedBeer = beerService.saveNewBeer(beer);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", BEER_PATH + "/" + savedBeer.getId().toString());
-        return new ResponseEntity(headers, HttpStatus.CREATED);
+    public ResponseEntity<?> handlePost(@Validated @RequestBody BeerDTO beer){
+        var savedBeer = beerService.saveNewBeer(beer);
+        return ResponseEntity.created(URI.create(BEER_PATH + "/" + savedBeer.getId().toString())).build();
     }
 
     @GetMapping(BEER_PATH)
-    public List listBeers() {
+    public List<BeerDTO> listBeers() {
         return beerService.listBeers();
     }
 

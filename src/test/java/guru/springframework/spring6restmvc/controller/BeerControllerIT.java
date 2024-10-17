@@ -23,8 +23,11 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Import(TestcontainersConfiguration.class)
@@ -50,6 +53,14 @@ class BeerControllerIT {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+
+    @Test
+    void tesListBeersByName() throws Exception {
+        mockMvc.perform(get(BeerController.BEER_PATH)
+                .queryParam("beerName", "IPA"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(100)));
     }
 
     @Test
@@ -141,6 +152,7 @@ class BeerControllerIT {
         BeerDTO beerDTO = BeerDTO.builder()
                 .beerName("New Beer")
                 .build();
+
         ResponseEntity responseEntity = beerController.handlePost(beerDTO);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(responseEntity.getHeaders().getLocation()).isNotNull();
@@ -162,20 +174,26 @@ class BeerControllerIT {
     @Test
     void testGetById() {
         Beer beer = beerRepository.findAll().get(0);
+
         BeerDTO dto = beerController.getBeerById(beer.getId());
+
         assertThat(dto).isNotNull();
     }
+
     @Test
     void testListBeers() {
         List<BeerDTO> dtos = beerController.listBeers();
-        assertThat(dtos.size()).isEqualTo(3);
+
+        assertThat(dtos.size()).isEqualTo(2413);
     }
+
     @Rollback
     @Transactional
     @Test
     void testEmptyList() {
         beerRepository.deleteAll();
         List<BeerDTO> dtos = beerController.listBeers();
+
         assertThat(dtos.size()).isEqualTo(0);
     }
 }

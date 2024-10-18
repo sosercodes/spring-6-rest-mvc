@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -32,7 +33,7 @@ public class BeerServiceJPA implements BeerService {
 
     @Override
     public Page<BeerDTO> listBeers(String beerName, BeerStyle beerStyle, Boolean showInventory, Integer pageNumber, Integer pageSize) {
-        final var pageRequest = buildPageRequest(pageNumber, pageSize);
+        final Pageable pageRequest = buildPageRequest(pageNumber, pageSize);
         final Page<Beer> page;
         if (StringUtils.hasText(beerName) && (beerStyle == null)) {
             page = listBeersByName(beerName, pageRequest);
@@ -43,18 +44,17 @@ public class BeerServiceJPA implements BeerService {
         } else {
             page = beerRepository.findAll(pageRequest);
         }
-
         if (showInventory != null && !showInventory) {
             page.forEach(b -> b.setQuantityOnHand(null));
         }
-
         return page.map(beerMapper::beerToBeerDto);
     }
 
-    public PageRequest buildPageRequest(Integer pageNumber, Integer pageSize) {
+    public Pageable buildPageRequest(Integer pageNumber, Integer pageSize) {
         final int page = pageNumber == null ? DEFAULT_PAGE : pageNumber - 1;
         final int size = pageSize == null ? DEFAULT_PAGE_SIZE : Math.min(pageSize, 1000);
-        return PageRequest.of(page, size);
+        final Sort sort = Sort.by(Sort.Direction.ASC, "beerName");
+        return PageRequest.of(page, size, sort);
     }
 
     private Page<Beer> listBeersByNameAndStyle(String beerName, BeerStyle beerStyle, Pageable pageable) {

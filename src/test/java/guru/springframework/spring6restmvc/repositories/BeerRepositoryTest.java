@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestPropertySource;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,9 +36,9 @@ class BeerRepositoryTest {
 
     @Test
     void testGetBeerListByName() {
-        List<Beer> list = beerRepository.findAllByBeerNameIsLikeIgnoreCase("%IPA%");
+        Page<Beer> list = beerRepository.findAllByBeerNameIsLikeIgnoreCase("%IPA%", null);
         assertThat(list).isNotEmpty();
-        assertThat(list).hasSize(336);
+        assertThat(list.getContent()).hasSize(336);
     }
 
 

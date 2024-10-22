@@ -107,4 +107,15 @@ References
 - [Dan Vega - Spring Data JPA Pagination - Youtube](https://www.youtube.com/watch?v=oq-c3D67WqM)
 - [Dan Vega - Spring Data JPA Pagination](https://www.danvega.dev/blog/spring-data-jpa-pagination)
 
+## Section 16: Database Relationship Mappings
+
+- Adds new Migration Script, that adds _BeerOrder_ and _BeerOrderLine_.
+- Creates new Entities `BeerOrder` and `BeerOrderLine` and updates `Customer`.
+- Updates `BeerOrderLine` and adds One-To-Many Relationships.
+- Creates `BeerOrderRepository` and `BeerOrderRepositoryTest`.
+
+Branches
+
+- [102.create-beer-order-repository](https://github.com/sosercodes/spring-6-rest-mvc/tree/102.create-beer-order-repository)
+
 

@@ -113,9 +113,11 @@ References
 - Creates new Entities `BeerOrder` and `BeerOrderLine` and updates `Customer`.
 - Updates `BeerOrderLine` and adds One-To-Many Relationships.
 - Creates `BeerOrderRepository` and `BeerOrderRepositoryTest`.
+- Creates a new entity `Category` and a Many-To-Many Mapping to `Beer`.
 
 Branches
 
 - [102.create-beer-order-repository](https://github.com/sosercodes/spring-6-rest-mvc/tree/102.create-beer-order-repository)
-
+- [105.many-to-many](https://github.com/sosercodes/spring-6-rest-mvc/tree/105.many-to-many)
+-
 

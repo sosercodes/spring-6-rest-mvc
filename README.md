@@ -114,10 +114,17 @@ References
 - Updates `BeerOrderLine` and adds One-To-Many Relationships.
 - Creates `BeerOrderRepository` and `BeerOrderRepositoryTest`.
 - Creates a new entity `Category` and a Many-To-Many Mapping to `Beer`.
+- Adds `BeerOrderShipment` and One-To-One Relationship from `BeerOrder` to `BeerOrderShipment`. But don't do it like he does! Use Unidirectional Mapping. See Referneces!
 
 Branches
 
 - [102.create-beer-order-repository](https://github.com/sosercodes/spring-6-rest-mvc/tree/102.create-beer-order-repository)
-- [105.many-to-many](https://github.com/sosercodes/spring-6-rest-mvc/tree/105.many-to-many)
--
+- [105.many-to-many](https://github.com/sosercodes/spring-6-rest-mvc/tree/105.many-to-many) from `Beer` to `Category`
+- [107.one-to-one-bi-directional](https://github.com/sosercodes/spring-6-rest-mvc/tree/107.one-to-one-bi-directional) from `Beer` to `Category`
+- 
+
+References
+
+- [Thorben Janssen - Hibernate Tip: How to Share the Primary Key in a One-to-One Association](https://www.youtube.com/watch?v=t9jdfQqmTVU).
+- [The best way to map a @OneToOne relationship with JPA and Hibernate](https://www.youtube.com/watch?v=GRV69QNSdVg)
 

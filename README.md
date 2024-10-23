@@ -115,12 +115,14 @@ References
 - Creates `BeerOrderRepository` and `BeerOrderRepositoryTest`.
 - Creates a new entity `Category` and a Many-To-Many Mapping to `Beer`.
 - Adds `BeerOrderShipment` and One-To-One Relationship from `BeerOrder` to `BeerOrderShipment`. But don't do it like he does! Use Unidirectional Mapping. See Referneces!
+- Show how to add `CascadeType.PERSIST` to `BeerOrderShipment` in `BeerOrder`.
 
 Branches
 
 - [102.create-beer-order-repository](https://github.com/sosercodes/spring-6-rest-mvc/tree/102.create-beer-order-repository)
 - [105.many-to-many](https://github.com/sosercodes/spring-6-rest-mvc/tree/105.many-to-many) from `Beer` to `Category`
 - [107.one-to-one-bi-directional](https://github.com/sosercodes/spring-6-rest-mvc/tree/107.one-to-one-bi-directional) from `Beer` to `Category`
+- [108.cascade-on-persist](https://github.com/sosercodes/spring-6-rest-mvc/tree/108.cascade-on-persist) from `Beer` to `Category`
 - 
 
 References

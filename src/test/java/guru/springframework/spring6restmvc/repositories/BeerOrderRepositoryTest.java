@@ -3,6 +3,7 @@ package guru.springframework.spring6restmvc.repositories;
 import guru.springframework.spring6restmvc.bootstrap.BootstrapData;
 import guru.springframework.spring6restmvc.entities.Beer;
 import guru.springframework.spring6restmvc.entities.BeerOrder;
+import guru.springframework.spring6restmvc.entities.BeerOrderShipment;
 import guru.springframework.spring6restmvc.entities.Customer;
 import guru.springframework.spring6restmvc.services.BeerCsvServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,9 +48,11 @@ class BeerOrderRepositoryTest {
     @Test
     @Transactional
     void testBeerOrders() {
+        BeerOrderShipment bos = BeerOrderShipment.builder().trackingNumber("TNR-1234").build();
         BeerOrder beerOrder = BeerOrder.builder()
                 .customerRef("Test Customer Ref")
                 .customer(testCustomer)
+                .beerOrderShipment(bos)
                 .build();
         BeerOrder saved = beerOrderRepository.saveAndFlush(beerOrder);
         System.out.println(saved.getCustomerRef());

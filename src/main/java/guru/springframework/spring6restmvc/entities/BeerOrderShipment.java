@@ -18,6 +18,7 @@ import java.util.UUID;
 @Entity
 @Builder
 public class BeerOrderShipment {
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")

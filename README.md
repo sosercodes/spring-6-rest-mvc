@@ -23,7 +23,16 @@ Branches
 
 - [76.flyway-dependencies](https://github.com/sosercodes/spring-6-rest-mvc/tree/76.flyway-dependencies)
 
-## Section 13: CSV File Uploads
+## Section 13:Using Test Containers with Spring Boot
+
+Adds support for TestContainers.
+
+>**Note - 28.Nov.2024** The the Spring Boot 3.1.0 release added some nice support for using Test Containers and Docker Compose. These features add nice Docker integration for running Docker containers with tests, or Docker Compose scripts are runtime.
+You'll find this new content with the MySQL and MongoDB sections of the course.
+> 
+
+
+## Section 14: CSV File Uploads
 
 Doesn't _Upload_ Files but adds lots of _Data_ to our App using a _CSV File_ `/src/main/recourses/csvdata/beers.csv` which will be .
 
@@ -34,7 +43,7 @@ Branches
 - [79-beer-csv-data](https://github.com/springframeworkguru/spring-6-rest-mvc/tree/79-beer-csv-data)
 - [85-beer-csv-fix-integration-tests](https://github.com/springframeworkguru/spring-6-rest-mvc/tree/85-beer-csv-fix-integration-tests)
 
-## Section 14: Query Parameters with Spring MVC
+## Section 15: Query Parameters with Spring MVC
 
 Adds _Query Parameters_ to the `BeerController`. Get all `Beer` with `lager` in the name.
 
@@ -47,7 +56,7 @@ Branch
 - [89.refactor-service-conditional-logic](https://github.com/sosercodes/spring-6-rest-mvc/tree/89.refactor-service-conditional-logic).
 
 
-## Section 15: Paging and Sorting
+## Section 16: Paging and Sorting
 
 Branch 
 
@@ -107,7 +116,7 @@ References
 - [Dan Vega - Spring Data JPA Pagination - Youtube](https://www.youtube.com/watch?v=oq-c3D67WqM)
 - [Dan Vega - Spring Data JPA Pagination](https://www.danvega.dev/blog/spring-data-jpa-pagination)
 
-## Section 16: Database Relationship Mappings
+## Section 17: Database Relationship Mappings
 
 - Adds new Migration Script, that adds _BeerOrder_ and _BeerOrderLine_.
 - Creates new Entities `BeerOrder` and `BeerOrderLine` and updates `Customer`.
@@ -123,7 +132,7 @@ Branches
 - [105.many-to-many](https://github.com/sosercodes/spring-6-rest-mvc/tree/105.many-to-many) from `Beer` to `Category`
 - [107.one-to-one-bi-directional](https://github.com/sosercodes/spring-6-rest-mvc/tree/107.one-to-one-bi-directional) from `Beer` to `Category`
 - [108.cascade-on-persist](https://github.com/sosercodes/spring-6-rest-mvc/tree/108.cascade-on-persist) from `Beer` to `Category`
-- 
+- [109.optimistic-locking-demo](https://github.com/sosercodes/spring-6-rest-mvc/tree/109.optimistic-locking-demo)
 
 References
 

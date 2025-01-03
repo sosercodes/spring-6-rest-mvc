@@ -2,12 +2,11 @@ package guru.springframework.spring6restmvc.services;
 
 import guru.springframework.spring6restmvc.model.BeerDTO;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BeerServiceImplTest {
 

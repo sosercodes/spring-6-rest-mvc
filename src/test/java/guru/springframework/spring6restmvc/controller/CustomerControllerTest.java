@@ -10,8 +10,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
@@ -32,14 +32,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CustomerController.class)
 class CustomerControllerTest {
 
+    @MockitoBean
+    CustomerService customerService;
+
     @Autowired
     MockMvc mockMvc;
 
     @Autowired
     ObjectMapper objectMapper;
-
-    @MockBean
-    CustomerService customerService;
 
     CustomerServiceImpl customerServiceImpl;
 

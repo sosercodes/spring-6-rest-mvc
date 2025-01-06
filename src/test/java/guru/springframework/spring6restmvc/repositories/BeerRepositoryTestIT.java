@@ -16,14 +16,21 @@ import org.springframework.test.context.TestPropertySource;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Import({BootstrapData.class, BeerCsvServiceImpl.class})
+@Import({TestcontainersConfiguration.class, BootstrapData.class, BeerCsvServiceImpl.class})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(
+        properties = {
+                "spring.datasource.url = jdbc:tc:mysql:9.0://hostname/test-database",
+                "spring.datasource.driver-class-name = org.testcontainers.jdbc.ContainerDatabaseDriver"
+        }
+)
+@ActiveProfiles("localmysql")
 @DataJpaTest
-class BeerRepositoryTest {
+class BeerRepositoryTestIT {
 
     @Autowired
     BeerRepository beerRepository;

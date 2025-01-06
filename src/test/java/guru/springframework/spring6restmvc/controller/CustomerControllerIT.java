@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.URI;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @Import(TestcontainersConfiguration.class)
+@ActiveProfiles("localmysql")
 @SpringBootTest
 class CustomerControllerIT {
     @Autowired

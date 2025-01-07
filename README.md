@@ -25,12 +25,17 @@ Branches
 
 ## Section 13:Using Test Containers with Spring Boot
 
-Adds support for TestContainers.
-
->**Note - 28.Nov.2024** The the Spring Boot 3.1.0 release added some nice support for using Test Containers and Docker Compose. These features add nice Docker integration for running Docker containers with tests, or Docker Compose scripts are runtime.
+The the Spring Boot 3.1.0 release added some nice support for using Test Containers and Docker Compose. These features add nice Docker integration for running Docker containers with tests, or Docker Compose scripts are runtime.
 You'll find this new content with the MySQL and MongoDB sections of the course.
-> 
 
+Adds support for TestContainers - see .
+
+>_**Note:**_ I've added support for Testcontainers in _Section 11: MySQL with Spring Boot_ - see [71.use-testcontainers](https://github.com/sosercodes/spring-6-rest-mvc/tree/71.use-testcontainers) _before_ SFG added the new section about Testcontainers!
+
+>_**Note:**_ _Section 17: Database Relationship Mappings_ synchronizes to SFG and adds the source for new _Section 13: Testcontainers_ - see  [109.optimistic-locking-demo-sync](https://github.com/sosercodes/spring-6-rest-mvc/tree/109.optimistic-locking-demo-sync).
+
+Branches
+-  [109.optimistic-locking-demo-sync](https://github.com/sosercodes/spring-6-rest-mvc/tree/109.optimistic-locking-demo-sync)
 
 ## Section 14: CSV File Uploads
 
@@ -126,6 +131,7 @@ References
 - Adds `BeerOrderShipment` and One-To-One Relationship from `BeerOrder` to `BeerOrderShipment`. But don't do it like he does! Use Unidirectional Mapping. See Referneces!
 - Show how to add `CascadeType.PERSIST` to `BeerOrderShipment` in `BeerOrder`.
 
+>**_Note:**_ `109.optimistic-locking-demo-sync` synchronizes to SFG after he added new _Section 13: Testcontainers_.
 Branches
 
 - [102.create-beer-order-repository](https://github.com/sosercodes/spring-6-rest-mvc/tree/102.create-beer-order-repository)
@@ -133,6 +139,7 @@ Branches
 - [107.one-to-one-bi-directional](https://github.com/sosercodes/spring-6-rest-mvc/tree/107.one-to-one-bi-directional) from `Beer` to `Category`
 - [108.cascade-on-persist](https://github.com/sosercodes/spring-6-rest-mvc/tree/108.cascade-on-persist) from `Beer` to `Category`
 - [109.optimistic-locking-demo](https://github.com/sosercodes/spring-6-rest-mvc/tree/109.optimistic-locking-demo)
+- [109.optimistic-locking-demo-sync](https://github.com/sosercodes/spring-6-rest-mvc/tree/109.optimistic-locking-demo-sync)
 
 References
 

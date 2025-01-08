@@ -315,3 +315,12 @@ References
 - [Thorben Janssen - Hibernate Tip: How to Share the Primary Key in a One-to-One Association](https://www.youtube.com/watch?v=t9jdfQqmTVU).
 - [The best way to map a @OneToOne relationship with JPA and Hibernate](https://www.youtube.com/watch?v=GRV69QNSdVg)
 
+## Section 22: Spring Security HTTP Basic Auth
+
+Branches
+
+- [110.adding-spring-security-dependencies](https://github.com/sosercodes/spring-6-rest-mvc/tree/110.adding-spring-security-dependencies)
+
+
+
+

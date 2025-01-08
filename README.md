@@ -317,9 +317,18 @@ References
 
 ## Section 22: Spring Security HTTP Basic Auth
 
+Basic Auth default with username `user` and the password you find in the console:
+
+```bash
+curl -u user:password  http://localhost:8080/api/v1/beer | jq
+```
+
+
 Branches
 
 - [110.adding-spring-security-dependencies](https://github.com/sosercodes/spring-6-rest-mvc/tree/110.adding-spring-security-dependencies)
+- [111.customizing-user-name-and-password](https://github.com/sosercodes/spring-6-rest-mvc/tree/111.customizing-user-name-and-password)
+- 
 
 
 

@@ -332,6 +332,7 @@ Branches
 - [113.spring-security-config-disable-csrf](https://github.com/sosercodes/spring-6-rest-mvc/tree/113.spring-security-config-disable-csrf)
 - [114.assignment-complete-update-of-tests](https://github.com/sosercodes/spring-6-rest-mvc/tree/114.assignment-complete-update-of-tests)
 - [115.spring-security-with-web-application-context](https://github.com/sosercodes/spring-6-rest-mvc/tree/115.spring-security-with-web-application-context)
+- [116.assignment-25-assn-fix-remaining-tests](https://github.com/sosercodes/spring-6-rest-mvc/tree/116.assignment-25-assn-fix-remaining-tests)
 - 
 
 

@@ -328,6 +328,10 @@ Branches
 
 - [110.adding-spring-security-dependencies](https://github.com/sosercodes/spring-6-rest-mvc/tree/110.adding-spring-security-dependencies)
 - [111.customizing-user-name-and-password](https://github.com/sosercodes/spring-6-rest-mvc/tree/111.customizing-user-name-and-password)
+- [112.testing-spring-security-with-junit-5](https://github.com/sosercodes/spring-6-rest-mvc/tree/112.testing-spring-security-with-junit-5)
+- [113.spring-security-config-disable-csrf](https://github.com/sosercodes/spring-6-rest-mvc/tree/113.spring-security-config-disable-csrf)
+- [114.assignment-complete-update-of-tests](https://github.com/sosercodes/spring-6-rest-mvc/tree/114.assignment-complete-update-of-tests)
+- [115.spring-security-with-web-application-context](https://github.com/sosercodes/spring-6-rest-mvc/tree/115.spring-security-with-web-application-context)
 - 
 
 
